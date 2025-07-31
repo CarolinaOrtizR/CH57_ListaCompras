@@ -6,8 +6,13 @@ const btnClear = document.getElementById("btnClear");
 const alertValidaciones = document.getElementById("alertValidaciones");
 const alertValidacionesTexto = document.getElementById("alertValidacionesTexto");
 
+const tablaListaCompras = document.getElementById("tablaListaCompras");
+const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
+
 const CONVERSION_NUMERO_MAS_GRANDE = 10000;
 const FACTOR_PARA_TRUNCAR_A_DOS_DECIMALES = 100;
+
+let cont =0;
 
 function validarCantidad() {
     if (txtNumber.value.length == 0) {
@@ -30,6 +35,7 @@ function getPrecio() {
 
 btnAgregar.addEventListener("click", function (event) {
 
+    let isValid = true;
     event.preventDefault();
     alertValidacionesTexto.innerHTML = "";
     alertValidaciones.style.display = "none";
@@ -40,11 +46,30 @@ btnAgregar.addEventListener("click", function (event) {
         txtName.style.border = "thin red solid";
         alertValidacionesTexto.innerHTML = "<strong>El nombre del producto no es correcto</strong><br>";
         alertValidaciones.style.display = "block";
+        isValid = false;
     }
 
     if (!validarCantidad()) {
         txtNumber.style.border = "thin red solid";
         alertValidacionesTexto.innerHTML += "<strong>La cantidad no es correcta</strong><br>";
         alertValidaciones.style.display = "block";
+        isValid = false;
+    }
+
+    if (isValid) {
+        cont++;
+        let precio = getPrecio();
+        let row = `<tr>
+                <td>${cont}</td>
+                <td>${txtName.value}</td>
+                <td>${txtNumber.value}</td>
+                <td>$${precio}</td>
+        </tr>
+        `;
+
+        cuerpoTabla.insertAdjacentHTML("beforeend",row);
+        txtName.value = "";
+        txtNumber.value = "";
+        txtName.focus();
     }
 });
