@@ -135,3 +135,34 @@ window.addEventListener("load",function(event){
     precioTotal.innerText = new Intl.NumberFormat("es-MX",{style:"currency", currency:"MXN"}).format(costoTotal);
 
 });
+
+btnClear.addEventListener("click", function(event){
+
+    //Eliminar localStorage
+    localStorage.clear();
+
+    //Limpiar tabla
+    cuerpoTabla.innerHTML = "";
+
+    //Limpiar campos
+    txtName.value = "";
+    txtNumber.value = "";
+
+    //Limpiar borde de campos
+    txtName.style.border = "";
+    txtNumber.style.border = "";
+
+    //Limpiar alerts
+    alertValidacionesTexto.innerHTML = "";
+    alertValidaciones.style.display = "none";
+
+    //Limpiar resumen
+    cont = 0;
+    totalEnProductos = 0;
+    costoTotal = 0;
+
+    contadorProductos.innerText = 0;
+    productosTotal.innerText = 0;
+    precioTotal.innerText = "$0";
+    datos = new Array();
+});
