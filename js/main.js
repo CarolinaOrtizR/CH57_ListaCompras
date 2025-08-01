@@ -19,6 +19,7 @@ const FACTOR_PARA_TRUNCAR_A_DOS_DECIMALES = 100;
 let cont =0;
 let totalEnProductos = 0;
 let costoTotal = 0;
+let datos = new Array();
 
 function validarCantidad() {
     if (txtNumber.value.length == 0) {
@@ -73,6 +74,16 @@ btnAgregar.addEventListener("click", function (event) {
         </tr>
         `;
 
+        let elemento = {
+            "cont": cont,
+            "nombre": txtName.value,
+            "cantidad": txtNumber.value,
+            "precio": precio
+        };
+
+        datos.push(elemento);
+        localStorage.setItem("datos",JSON.stringify(datos));
+
         cuerpoTabla.insertAdjacentHTML("beforeend",row);
        
         contadorProductos.innerText = cont;
@@ -81,9 +92,17 @@ btnAgregar.addEventListener("click", function (event) {
         costoTotal += (precio * Number(txtNumber.value));
         precioTotal.innerText = new Intl.NumberFormat("es-MX",{style:"currency", currency:"MXN"}).format(costoTotal);
 
+        let resumen = {
+                        "cont":cont,
+                        "totalEnProductos": totalEnProductos,
+                        "costoTotal": costoTotal.toFixed(2)
+        };
+
+        localStorage.setItem("resumen",JSON.stringify(resumen));
+
+        //Limpiar variables
         txtName.value = "";
         txtNumber.value = "";
         txtName.focus();
-
     }
 });
