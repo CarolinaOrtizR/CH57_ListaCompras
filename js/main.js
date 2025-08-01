@@ -9,10 +9,16 @@ const alertValidacionesTexto = document.getElementById("alertValidacionesTexto")
 const tablaListaCompras = document.getElementById("tablaListaCompras");
 const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
 
+const contadorProductos = document.getElementById("contadorProductos");
+const productosTotal = document.getElementById("productosTotal");
+const precioTotal = document.getElementById("precioTotal");
+
 const CONVERSION_NUMERO_MAS_GRANDE = 10000;
 const FACTOR_PARA_TRUNCAR_A_DOS_DECIMALES = 100;
 
 let cont =0;
+let totalEnProductos = 0;
+let costoTotal = 0;
 
 function validarCantidad() {
     if (txtNumber.value.length == 0) {
@@ -68,8 +74,16 @@ btnAgregar.addEventListener("click", function (event) {
         `;
 
         cuerpoTabla.insertAdjacentHTML("beforeend",row);
+       
+        contadorProductos.innerText = cont;
+        totalEnProductos += Number(txtNumber.value);
+        productosTotal.innerText = totalEnProductos;
+        costoTotal += (precio * Number(txtNumber.value));
+        precioTotal.innerText = new Intl.NumberFormat("es-MX",{style:"currency", currency:"MXN"}).format(costoTotal);
+
         txtName.value = "";
         txtNumber.value = "";
         txtName.focus();
+
     }
 });
